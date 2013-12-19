@@ -1,0 +1,215 @@
+# lingr.vim: Lingr client for Vim
+Now this plugin is *little unstable*. Please use this at your own risk.
+
+今のところ *ちょっと不安定* なので，自己責任でご利用ください
+
+*Be careful. Don't use this plugin in X11 environment because it crashes Vim!*
+
+*注意．X11環境では使わないでください．Vimがクラッシュします！*
+
+## Requirement
+This plugin is tested with Vim 7.2, but maybe works with Vim 7.0 or 7.1.
+
+This plugin needs +python (Python 2.6 only)
+
+## Install
+Of couse, your machine needs to be connected to web.
+### Example ways of installing Vim with +python feature
+* Windows
+  * Use [KaoriYa Vim](http://www.kaoriya.net/) and [Python 2.6 DLL](http://www.python.org/download/)
+* Mac OS X
+  * Use [MacVim-KaoriYa](http://code.google.com/p/macvim-kaoriya/)
+  * Install with [MacPorts](http://www.macports.org/)
+    * sudo port install vim +huge +python26
+* Ubuntu/Debian
+  * Use vim-python package
+* Other OSs or distributions
+  * Please let me know!
+
+### Install Lingr-Vim
+* Put files in your vim runtime directory.
+  * If you use Windows, the runtime directory may be ~\\_vimfiles, otherwise that may be ~/.vim
+
+## Usage
+* Launch with `:LingrLaunch`
+  * Set user name to `g:lingr_vim_user` and password to `g:lingr_vim_password` to automatic login
+  * Use `:LingrLaunch!` to force interactive login
+* Select rooms with `<Enter>` in lingr-rooms buffer at left above
+* lingr-members buffer at left below shows members of selected room
+* lingr-messages buffer at right side shows messages
+  * Press `<Enter>` on `[Read more from archives]` at top of the buffer
+    to get more archives
+  * Press `<Enter>` on URLs to open it on browser
+  * Press `s` to show a buffer for say
+    * Press `<Enter>` in Normal Mode to say with the buffer contents
+    * Press `<Esc>` in Normal Mode to close the buffer
+* Press `o` in lingr-rooms and lingr-members to open corresponding pages
+  in Lingr on browser
+* Other commands in lingr-messages
+  * Press `<C-n>` or `<C-p>` to go around rooms
+  * Press `{` or `}` to junp to delimiters that are inserted between past logs
+  * Use `Q{motion}` to quote messages in Normal Mode
+  * Press `Q` to quote messages in Visual Mode
+* Mouse operations are also supported
+  * Left click works as same as `<Enter>`
+  * Left double click works as same as `o`
+* Logout with `:LingrExit`
+
+## 簡単な使い方
+* `:LingrLaunch`で起動します
+  * `g:lingr_vim_user`にユーザ名，`g:lingr_vim_password`にパスワードを設定すると自動的にログインできます
+  * `:LingrLaunch!`を使うと強制的にユーザ名とパスワードを聞きます
+* 左上のlingr-roomsでは`<Enter>`で部屋を選択できます
+* 左下のlingr-membersには選択中の部屋のメンバーが表示されます
+* 右のlingr-messagesでメッセージを閲覧できます
+  * 一番上の`[Read more from archives]`上で`<Enter>`を押すと過去ログを遡れます
+  * URL上で`<Enter>`を押すとブラウザで開けます
+  * `s`で発言用のバッファが表示されます
+    * ノーマルモードで`<Enter>`を押すとバッファの内容が発言されます
+    * ノーマルモードで`<Esc>`でバッファを閉じます
+* lingr-roomsとlingr-messagesでは`o`を押すとLingrの該当ページをブラウザで開けます
+* lingr-messagesのその他のコマンド
+  * `<C-n>`と`<C-p>`で部屋を巡回できます
+  * `{`と`}`で過去ログ取得時に挿入される区切りにジャンプできます
+  * ノーマルモードでは`Q{motion}`でメッセージを引用できます
+  * ビジュアルモードでは`Q`でメッセージを引用できます
+* マウスでも一応操作できます
+  * `<Enter>`でできることは左クリックでもできます
+  * `o`でできることは左ダブルクリックでもできます
+* `:LingrExit`でログアウトできます
+
+## Options
+<dl>
+    <dt><code>g:lingr_vim_sidebar_width</code></dt>
+    <dd>Width of the sidebar. <br>Default is <code>25</code>.</dd>
+
+    <dt><code>g:lingr_vim_rooms_buffer_height</code></dt>
+    <dd>Height of lingr-rooms buffer. <br>Default is <code>10</code>.</dd>
+
+    <dt><code>g:lingr_vim_say_buffer_height</code></dt>
+    <dd>Height of lingr-say buffer. <br>Default is <code>3</code>.</dd>
+
+    <dt><code>g:lingr_vim_remain_height_to_auto_scroll</code></dt>
+    <dd>If remain height is less than this value, auto scroll is performed
+    when Lingr-Vim receives some messages. <br>Default is <code>5</code>.</dd>
+
+    <dt><code>g:lingr_vim_time_format</code></dt>
+    <dd>Time format for messages. Please see C language strftime() reference
+    to customize this value. <br>Default is <code>'%c'</code>.</dd>
+
+    <dt><code>g:lingr_vim_command_to_open_url</code></dt>
+    <dd>Command to open url in browsers. Default value is set for each OSs.
+    For example, <code>"open %s"</code> is set for Mac OS X.
+    <code>%s</code> is replaced to specified URL</dd>
+</dl>
+
+## Custom event
+<dl>
+    <dt><code>plugin-lingr-connected</code></dt>
+    <dd>Dispatched when Lingr-Vim connects to Lingr</dd>
+
+    <dt><code>plugin-lingr-message</code></dt>
+    <dd>Dispatched when Lingr-Vim receives new message</dd>
+
+    <dt><code>plugin-lingr-presence</code></dt>
+    <dd>Dispatched when someone changes her/his presence</dd>
+
+    <dt><code>plugin-lingr-unread</code></dt>
+    <dd>Dispatched when unread count is changed</dd>
+
+    <dt><code>plugin-lingr-connected</code></dt>
+    <dd>Dispatched when some errors occur</dd>
+</dl>
+
+## API
+<dl>
+    <dt><code>lingr#launch(use_setting)</code></dt>
+    <dd>Same as :LingrLaunch</dd>
+
+    <dt><code>lingr#exit()</dt>
+    <dd>Same as :LingrExit</dd>
+
+    <dt><code>lingr#say(text)</dt>
+    <dd>Say <code>a:text</code> to the current room</dd>
+
+    <dt><code>lingr#open_url(url)</dt>
+    <dd>Open <code>a:url</code> in browser with using <code>g:lingr_vim_command_to_open_url</code></dd>
+
+    <dt><code>lingr#unread_count()</code></dt>
+    <dd>Return count of unread messages or -1 if Lingr-Vim has not been launched. You may want to use this in <code>'statusline'</code> or <code>'tabline'</code></dd>
+
+    <dt><code>lingr#status()</code></dt>
+    <dd>Return current status of Lingr-Vim: connected/offline/waiting for reconnect...</dd>
+
+    <dt><code>lingr#current_room()</code></dt>
+    <dd>Return the name of current room</dd>
+
+    <dt><code>lingr#member_count()</code></dt>
+    <dd>Return the number of members in the current room</dd>
+
+    <dt><code>lingr#online_member_count()</code></dt>
+    <dd>Return the number of online members in the current room</dd>
+
+    <dt><code>lingr#offline_member_count()</code></dt>
+    <dd>Return the number of offline members in the current room</dd>
+
+    <dt><code>lingr#get_last_message()</code></dt>
+    <dd>Return the dictionary of last message<br>
+        The dictionary member is <code>nickname</code> and <code>text</code><br>
+        You may want to use this with <code>plugin-lingr-message</code> event</dd>
+
+    <dt><code>lingr#get_last_member()</code></dt>
+    <dd>Return the dictionary of last member who changes her/his presence<br>
+        The dictionary member is <code>name</code>, <code>username</code> and <code>presence</code><br>
+        You may want to use this with <code>plugin-lingr-member</code> event</dd>
+
+    <dt><code>lingr#quote_operator(motion_wiseness)</code></dt>
+    <dd>This is the function for quote operator (default is <code>Q</code>)</dd>
+</dl>
+
+## Customize example
+### Using Growl on Mac OS X
+
+<pre><code>function! s:growl(title, message)
+    execute printf('silent !growlnotify -t %s -m %s', shellescape(a:title, 1), shellescape(a:message, 1))
+endfunction
+
+augroup lingr-vim
+    autocmd!
+    autocmd User plugin-lingr-message
+    \   let s:temp = lingr#get_last_message()
+    \|  if !empty(s:temp)
+    \|      call s:growl(s:temp.nickname, s:temp.text)
+    \|  endif
+    \|  unlet s:temp
+
+    autocmd User plugin-lingr-presence
+    \   let s:temp = lingr#get_last_member()
+    \|  if !empty(s:temp)
+    \|      call s:growl(s:temp.name, (s:temp.presence ? 'online' : 'offline'))
+    \|  endif
+    \|  unlet s:temp
+augroup END</code></pre>
+
+## Licence
+### The MIT License
+<pre>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+日本語参考訳
+http://sourceforge.jp/projects/opensource/wiki/licenses%2FMIT_license</pre>

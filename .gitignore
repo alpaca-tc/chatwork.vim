@@ -1,0 +1,16 @@
+.*~
+*.*swp
+.*swp
+.DS_Store
+tags
+.sass-cache
+.tern-port
+npm-debug.log
+.vagrant/*
+node_modules/*
+.o
+.yui
+yui
+*.pyc
+.watsonrc
+.watsonresults
