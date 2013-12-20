@@ -5,7 +5,8 @@ endfunction"}}}
 let s:buffer = chatwork#buffer#get_base('chatwork_messages')
 
 function! s:buffer.layout() "{{{
-  edit `=self.name`
+  silent only
+  return self.BufferManager.open(self.name, 'edit')
 endfunction"}}}
 
 function! s:buffer.setup() "{{{
