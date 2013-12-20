@@ -28,17 +28,27 @@ function! chatwork#api#v1#connect(method, path, ...) "{{{
     if method == 'GET'
       let res = s:HTTP.get(url, params, s:get_header())
     elseif method == 'POST'
-      let header = s:get_header({ 'Content-Type': 'application/json'})
-      let res = s:HTTP.post(url, s:JSON.encode(params), header, method)
+      let header = s:get_header()
+      let res = s:HTTP.post(url, params, header, method)
     endif
 
-    let body = res.content
+    if empty(res.content)
+      let content = {}
+    else
+      let content = raw ?
+            \ chatwork#util#iconv(res.content, 'utf-8', &encoding) :
+            \ s:JSON.decode(res.content)
+    endif
+
+    let body = {
+          \ 'status' : res.status,
+          \ 'body' : content
+          \ }
   catch
-    echo v:errmsg
-    let body = 'missing'
+    let body = { 'status' : res.status, 'body' : '', 'error_message' : v:errmsg }
   endtry
 
-  return raw ? chatwork#util#iconv(body, 'utf-8', &encoding) : s:JSON.decode(body)
+  return body
 endfunction"}}}
 
 function! s:get_header(...) " {{{
