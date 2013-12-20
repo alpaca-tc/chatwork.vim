@@ -15,11 +15,12 @@ function! chatwork#api#v1#connect(method, path, ...) "{{{
   for v in chatwork#util#flatten(a:000)
     if type(v) == type(0)
       let raw = v
-    elseif type(v) == type('')
-      let path .= '/' . v
     elseif type(v) == type({})
       call extend(params, v)
+    elseif type(v) == type('')
+      let path .= '/' . v
     endif
+
     unlet v
   endfor
 

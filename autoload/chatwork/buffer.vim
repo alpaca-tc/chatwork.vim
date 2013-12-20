@@ -24,7 +24,9 @@ endfunction"}}}
 let s:Buffer = {
       \ 'BufferManager' : s:BufferManager,
       \ 'buffers' : [],
+      \ '_common' : { 'rooms': { '16737582' : {} } },
       \ }
+" [todo] - commonは消す。別の場所から初期化する
 
 function! s:Buffer.new() "{{{
   call self.initialize()
@@ -41,6 +43,11 @@ function! s:Buffer.initialize() "{{{
 
   if has_key(self, 'setup')
     call self.setup()
+  endif
+  " [todo] - Move this function
+
+  if has_key(self, 'render')
+    call self.render()
   endif
 endfunction"}}}
 
@@ -60,9 +67,9 @@ function! s:Buffer.setup_base() "{{{
   doau BufEnter <buffer>
 endfunction"}}}
 
-function! s:Buffer.do_hooks(type)
+function! s:Buffer.do_hooks(type) "{{{
   " let buffer_name = bufname('')
-endfunction
+endfunction"}}}
 
 function! s:Buffer.on_enter() "{{{
   let b:updatetime_saved = &updatetime
@@ -84,3 +91,5 @@ function! s:Buffer.polling() "{{{
 endfunction"}}}
 "}}}
 
+function! chatwork#buffer#update_information(information)
+endfunction
