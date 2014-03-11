@@ -33,12 +33,11 @@ function! s:buffer.render() "{{{
   call map(range(0, len(body) - 1), 's:buffer.append(v:val, body[v:val])')
 endfunction"}}}
 
-function! s:buffer.append(id, message)
+function! s:buffer.append(id, message) "{{{
   let body = map(split(a:message.body, '\n'), '" " . v:val')
 
   let header = printf("%s (%s)", a:message.name, a:message.date)
   call insert(body, header)
   " put body
   call append(line('$'), body)
-endfunction
-
+endfunction"}}}

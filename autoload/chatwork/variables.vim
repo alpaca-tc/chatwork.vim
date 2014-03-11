@@ -4,8 +4,7 @@ function! chatwork#variables#initalize() "{{{
   endif
   let s:is_initialized = 1
 
-  " [todo] - デフォルト値を修正する
-  let g:chatwork#token = get(g:, 'chatwork#token', '535068121542058fad749bd1d84c0ad6')
+  let g:chatwork#token = get(g:, 'chatwork#token', '')
   let g:chatwork#buffer#rooms_height = get(g:, 'chatwork#buffer#rooms_height', 10)
   let g:chatwork#buffer#leftbar_width = get(g:, 'chatwork#buffer#leftbar_width', 20)
   let g:chatwork#buffer#rightbar_width = get(g:, 'chatwork#buffer#rightbar_width', 20)
