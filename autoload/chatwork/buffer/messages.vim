@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 function! chatwork#buffer#messages#initialize() "{{{
   call s:buffer.new()
 endfunction"}}}
