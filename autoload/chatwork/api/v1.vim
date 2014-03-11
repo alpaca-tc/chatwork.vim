@@ -1,5 +1,5 @@
 let s:V = chatwork#util#get_vital()
-let s:HTTP = s:V.import('Web.Http')
+let s:HTTP = s:V.import('Web.HTTP')
 let s:JSON = s:V.import('Web.JSON')
 
 let s:base_endpoint = 'https://api.chatwork.com/v1'
