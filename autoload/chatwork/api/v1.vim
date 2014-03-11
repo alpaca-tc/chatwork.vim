@@ -55,7 +55,7 @@ endfunction"}}}
 function! s:get_header(...) " {{{
   if !exists('s:header')
     let s:header = {
-          \ 'X-ChatWorkToken': g:chatwork#token,
+          \ 'X-ChatWorkToken': get(g:, 'chatwork#token', ''),
           \ }
   endif
 
